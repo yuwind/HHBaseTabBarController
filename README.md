@@ -1,0 +1,2 @@
+# HHBaseTabBarController
+一种简洁优雅的方式封装TabBarController，支持双击事件。
