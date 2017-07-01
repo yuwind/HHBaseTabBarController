@@ -1,5 +1,7 @@
 # HHBaseTabBarController
 一种简洁优雅的方式封装TabBarController，支持双击事件。
+
+
 **说明：**
 这个一个使用非常简单的自定义TabBarController，支持双击回到顶部事件。
 只需要子控制遵守协议`DoubleClickProtocol`，实现协议方法即可回调双击事件。
