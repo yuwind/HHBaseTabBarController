@@ -25,10 +25,15 @@
 }
 - (void)configBaseTabBarInitial
 {
-    self.tableBarView = [[HHTableBarView alloc]initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - KTabBarHeight, [UIScreen mainScreen].bounds.size.width, KTabBarHeight)];
+    self.tableBarView = [[HHTableBarView alloc]initWithFrame:CGRectZero];
     self.tableBarView.delegate = self;
     [self.view addSubview:self.tableBarView];
     self.tapIndex = 0;
+    
+    self.tableBarView.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *bindView = NSDictionaryOfVariableBindings(_tableBarView);
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_tableBarView]|" options:0 metrics:nil views:bindView]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_tableBarView(50)]|" options:0 metrics:nil views:bindView]];
 }
 
 - (void)setViewControllers:(NSArray<__kindof UIViewController *> *)viewControllers
@@ -37,10 +42,16 @@
     _tableBarView.totalCount = viewControllers.count;
     for (int i = 0; i< viewControllers.count;i++) {
         UIViewController *vc = viewControllers[i];
-        vc.view.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - KTabBarHeight);
+
         vc.view.tag = VIEWTAG+i;
         [self.view addSubview:vc.view];
         [self addChildViewController:vc];
+        
+        UIView *coverView = vc.view;
+        coverView.translatesAutoresizingMaskIntoConstraints = NO;
+        NSDictionary *bindViews = NSDictionaryOfVariableBindings(coverView,_tableBarView);
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[coverView]|" options:0 metrics:nil views:bindViews]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[coverView]-0-[_tableBarView]" options:0 metrics:nil views:bindViews]];
     }
     UIView * firstView = [self.view viewWithTag:VIEWTAG];
     [self.view bringSubviewToFront:firstView];
@@ -70,51 +81,6 @@
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     return [self.viewControllers[self.tapIndex] preferredStatusBarStyle];
-}
-
-/**
- 是否需要隐藏tabBarView, 有需求再加上
- 
- @param status YES隐藏、NO显示
- @param animation 是否需要动画效果
- */
-
-- (void)needToHiddenTabBarView:(BOOL)status animation:(BOOL)animation
-{
-    UIView *coverView = self.view.subviews.lastObject;
-//    UIView *bgView = coverView.subviews.firstObject;
-    
-    if (status) {
-        
-        if (animation) {
-            
-            [UIView animateWithDuration:0.3 animations:^{
-                coverView.height += KTabBarHeight;
-//                bgView.height += KTabBarHeight;
-                self.tableBarView.y = [UIScreen mainScreen].bounds.size.height;
-            }];
-        }else
-        {
-            coverView.height += KTabBarHeight;
-//            bgView.height += KTabBarHeight;
-            self.tableBarView.y = [UIScreen mainScreen].bounds.size.height;
-        }
-    }else
-    {
-        if (animation) {
-            
-            [UIView animateWithDuration:0.3 animations:^{
-                coverView.height -= KTabBarHeight;
-//                bgView.height -= KTabBarHeight;
-                self.tableBarView.y = [UIScreen mainScreen].bounds.size.height-KTabBarHeight;
-            }];
-        }else
-        {
-            coverView.height -= KTabBarHeight;
-//            bgView.height -= KTabBarHeight;
-            self.tableBarView.y = [UIScreen mainScreen].bounds.size.height-KTabBarHeight;
-        }
-    }
 }
 
 

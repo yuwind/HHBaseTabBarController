@@ -64,20 +64,37 @@
 }
 - (void)configInitialInfo
 {
-     self.backgroundColor = [UIColor whiteColor];
-     [self addTopLine:[UIColor darkGrayColor]];
+    self.backgroundColor = [UIColor whiteColor];
+    CALayer *layer = [CALayer layer];
+    layer.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 0.5);
+    layer.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [self.layer addSublayer:layer];
 }
 - (void)configTableBarBaseInfo
 {
     for (int i = 0; i<self.totalCount; i++) {
         
-        HHBarButton *button = [[HHBarButton alloc]initWithFrame:CGRectMake(0, 0, self.height, self.height) markTag:i];
+        HHBarButton *button = [[HHBarButton alloc]initWithFrame:CGRectZero markTag:i];
         button.delegate = self;
         [self addSubview:button];
         if (i == 0) {
             [button changeButtonState:NO];
             _tempButton = button;
         }
+    }
+    [self addSubViewConstraints];
+}
+- (void)addSubViewConstraints
+{
+    CGFloat btnWidth = [UIScreen mainScreen].bounds.size.width/self.totalCount;
+    for (int i = 0; i<self.subviews.count; i++) {
+        
+        HHBarButton *button = self.subviews[i];
+        button.translatesAutoresizingMaskIntoConstraints = NO;
+        NSString *xFormat = [NSString stringWithFormat:@"H:|-%lf-[button(%lf)]",i*btnWidth,btnWidth];
+        NSDictionary *bindViews = NSDictionaryOfVariableBindings(button);
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:xFormat options:0 metrics:nil views:bindViews]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0.5-[button]|" options:0 metrics:nil views:bindViews]];
     }
 }
 
@@ -104,6 +121,7 @@
         }
     }
     _totalCount = totalCount;
+    [self addSubViewConstraints];
 }
 
 - (void)configTableBarTitle:(NSString *)title normalImage:(NSString *)normalImage selectedImage:(NSString *)selectedImage atIndex:(NSInteger)index
@@ -125,51 +143,5 @@
     }
 }
 
-- (void)layoutSubviews
-{
-    [self arrangeSubviewNotHidden];
-}
-
-- (void)arrangeSubviewNotHidden
-{
-    if (self.subviews) {
-        
-        NSMutableArray <UIView *>*arrayM = [NSMutableArray array];
-        for (int i = 0; i<self.subviews.count; i++) {
-            
-            UIView *view = self.subviews[i];
-            
-            if (!view.hidden) {
-                
-                [arrayM addObject:view];
-            }
-        }
-        [self arrangeSubviews:arrayM];
-    }
-}
-
-- (void)arrangeSubviews:(NSArray <UIView *>*)countArray
-{
-    if (countArray && countArray.count)
-    {
-        [self computerSubview:countArray];
-    }
-    else if (self.subviews && self.subviews.count)
-    {
-        [self computerSubview:self.subviews];
-    }
-}
-
-- (void)computerSubview:(NSArray <UIView *>*)resultArray
-{
-    CGFloat width = self.width / resultArray.count;
-    
-    for (int i = 0; i<resultArray.count; i++) {
-        
-        UIView *view = resultArray[i];
-        view.centerY = self.height / 2;
-        view.centerX = i*width+width/2;
-    }
-}
 
 @end

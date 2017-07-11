@@ -52,7 +52,6 @@
 {
     return self.topViewController;
 }
-
 - (BOOL)shouldAutorotate
 {
     return self.topViewController.shouldAutorotate;

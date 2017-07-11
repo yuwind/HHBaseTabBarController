@@ -29,7 +29,7 @@
 @property(nullable, nonatomic,copy) NSArray<__kindof UIViewController *> *viewControllers;
 
 /**
- 调用configTableBarDisplay方法进行配置，文字颜色大小在 CommonConfig.h
+ 调用configTableBarTitle方法进行配置，文字颜色大小在 CommonConfig.h
  */
 
 @property (nonatomic, strong) HHTableBarView * _Nonnull tableBarView;

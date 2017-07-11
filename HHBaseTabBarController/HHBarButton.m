@@ -76,6 +76,11 @@
     _button = [[HHButton alloc]init];
     [_button addTarget:self action:@selector(HHbuttonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_button];
+    
+    _button.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *bindView = NSDictionaryOfVariableBindings(_button);
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_button]|" options:0 metrics:nil views:bindView]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_button]|" options:0 metrics:nil views:bindView]];
 }
 - (void)configButtonDisplay:(NSString *)title normalImage:(NSString *)normalImage selectedImage:(NSString *)selectedImage
 {
@@ -94,7 +99,6 @@
         
         [_button setImage:[UIImage imageNamed:selectedImage] forState:UIControlStateDisabled];
     }
-    
 }
 - (void)changeButtonState:(BOOL)status
 {
