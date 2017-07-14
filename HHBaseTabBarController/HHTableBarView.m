@@ -86,6 +86,7 @@
 }
 - (void)addSubViewConstraints
 {
+    if (self.totalCount == 0)return;
     CGFloat btnWidth = [UIScreen mainScreen].bounds.size.width/self.totalCount;
     for (int i = 0; i<self.subviews.count; i++) {
         
