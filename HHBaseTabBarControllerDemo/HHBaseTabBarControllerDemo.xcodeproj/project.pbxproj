@@ -11,7 +11,6 @@
 		500032521F0774F0003A95EF /* HHBaseTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 500032491F0774F0003A95EF /* HHBaseTabBarViewController.m */; };
 		500032531F0774F0003A95EF /* HHButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5000324B1F0774F0003A95EF /* HHButton.m */; };
 		500032541F0774F0003A95EF /* HHTableBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5000324E1F0774F0003A95EF /* HHTableBarView.m */; };
-		500032551F0774F0003A95EF /* UIView+HHConstruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 500032501F0774F0003A95EF /* UIView+HHConstruct.m */; };
 		5019DC041F07370000C1685D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5019DBF91F07370000C1685D /* Assets.xcassets */; };
 		5019DC051F07370000C1685D /* HHMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5019DBFA1F07370000C1685D /* HHMain.storyboard */; };
 		5019DC061F07370000C1685D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5019DBFC1F07370000C1685D /* LaunchScreen.storyboard */; };
@@ -42,8 +41,6 @@
 		5000324C1F0774F0003A95EF /* HHCommonInitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHCommonInitial.h; sourceTree = "<group>"; };
 		5000324D1F0774F0003A95EF /* HHTableBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHTableBarView.h; sourceTree = "<group>"; };
 		5000324E1F0774F0003A95EF /* HHTableBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHTableBarView.m; sourceTree = "<group>"; };
-		5000324F1F0774F0003A95EF /* UIView+HHConstruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HHConstruct.h"; sourceTree = "<group>"; };
-		500032501F0774F0003A95EF /* UIView+HHConstruct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HHConstruct.m"; sourceTree = "<group>"; };
 		5019DBDE1F07369600C1685D /* HHBaseTabBarControllerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HHBaseTabBarControllerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5019DBF91F07370000C1685D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5019DBFB1F07370000C1685D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/HHMain.storyboard; sourceTree = "<group>"; };
@@ -95,8 +92,6 @@
 				5000324E1F0774F0003A95EF /* HHTableBarView.m */,
 				500032481F0774F0003A95EF /* HHBaseTabBarViewController.h */,
 				500032491F0774F0003A95EF /* HHBaseTabBarViewController.m */,
-				5000324F1F0774F0003A95EF /* UIView+HHConstruct.h */,
-				500032501F0774F0003A95EF /* UIView+HHConstruct.m */,
 			);
 			name = HHBaseTabBarController;
 			path = ../HHBaseTabBarController;
@@ -231,7 +226,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5019DC301F073B5A00C1685D /* HHTest1ViewController.m in Sources */,
-				500032551F0774F0003A95EF /* UIView+HHConstruct.m in Sources */,
 				5019DC331F073B8700C1685D /* HHTest2ViewController.m in Sources */,
 				500032511F0774F0003A95EF /* HHBarButton.m in Sources */,
 				500032521F0774F0003A95EF /* HHBaseTabBarViewController.m in Sources */,

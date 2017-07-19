@@ -6,7 +6,6 @@
 //  Copyright © 2017年 豫风. All rights reserved.
 //
 
-#import "UIView+HHConstruct.h"
 #import "HHTableBarView.h"
 #import "HHBarButton.h"
 
@@ -15,7 +14,7 @@
 @interface HHTableBarView ()< HHBarButtonDelegate >
 
 @property (nonatomic, strong) HHBarButton *tempButton;
-
+@property (nonatomic, strong) CALayer *lineLayer;
 @end
 
 @implementation HHTableBarView
@@ -62,13 +61,18 @@
     }
     return self;
 }
+
+- (void)layoutSubviews
+{
+    self.lineLayer.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 0.5);
+}
 - (void)configInitialInfo
 {
     self.backgroundColor = [UIColor whiteColor];
-    CALayer *layer = [CALayer layer];
-    layer.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 0.5);
-    layer.backgroundColor = [UIColor lightGrayColor].CGColor;
-    [self.layer addSublayer:layer];
+    self.lineLayer = [CALayer layer];
+    self.lineLayer.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 0.5);
+    self.lineLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+    [self.layer addSublayer:self.lineLayer];
 }
 - (void)configTableBarBaseInfo
 {
@@ -86,14 +90,29 @@
 }
 - (void)addSubViewConstraints
 {
-    if (self.totalCount == 0)return;
-    CGFloat btnWidth = [UIScreen mainScreen].bounds.size.width/self.totalCount;
     for (int i = 0; i<self.subviews.count; i++) {
         
         HHBarButton *button = self.subviews[i];
         button.translatesAutoresizingMaskIntoConstraints = NO;
-        NSString *xFormat = [NSString stringWithFormat:@"H:|-%lf-[button(%lf)]",i*btnWidth,btnWidth];
-        NSDictionary *bindViews = NSDictionaryOfVariableBindings(button);
+        NSDictionary *bindViews = nil;
+        NSString *xFormat = nil;
+        if (i == 0) {
+        
+            HHBarButton *nextButton = self.subviews[i+1];
+            bindViews = NSDictionaryOfVariableBindings(button,nextButton);
+            xFormat = [NSString stringWithFormat:@"H:|[button(==nextButton)]-0-[nextButton]"];
+        }else if (i == self.subviews.count -1)
+        {
+            HHBarButton *formerButton = self.subviews[i-1];
+            bindViews = NSDictionaryOfVariableBindings(button,formerButton);
+            xFormat = [NSString stringWithFormat:@"H:[formerButton]-0-[button(==formerButton)]|"];
+        }
+        else
+        {
+            HHBarButton *formerButton = self.subviews[i-1];
+            bindViews = NSDictionaryOfVariableBindings(button,formerButton);
+            xFormat = [NSString stringWithFormat:@"H:[formerButton]-0-[button(==formerButton)]"];
+        }
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:xFormat options:0 metrics:nil views:bindViews]];
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0.5-[button]|" options:0 metrics:nil views:bindViews]];
     }
@@ -112,7 +131,7 @@
         NSInteger margin = totalCount - _totalCount;
         for (int i = 0; i<margin; i++) {
             
-            HHBarButton *button = [[HHBarButton alloc]initWithFrame:CGRectMake(0, 0, self.height, self.height) markTag:i+_totalCount];
+            HHBarButton *button = [[HHBarButton alloc]initWithFrame:CGRectZero markTag:i+_totalCount];
             button.delegate = self;
             [self addSubview:button];
             if (_totalCount == 0 && i == 0) {

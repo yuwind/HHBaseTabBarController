@@ -8,7 +8,6 @@
 
 #import "HHTest0ViewController.h"
 #import "HHViewController.h"
-#import "UIView+HHConstruct.h"
 
 @interface HHTest0ViewController () <UITableViewDelegate ,UITableViewDataSource, DoubleClickProtocol>
 
@@ -36,7 +35,7 @@
 }
 - (void)viewDidLayoutSubviews
 {
-    self.tableView.frame = CGRectMake(0, 20, self.view.width, self.view.height-20);
+    self.tableView.frame = CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height-20);
 }
 - (void)doubleClickActionNeedToDo
 {

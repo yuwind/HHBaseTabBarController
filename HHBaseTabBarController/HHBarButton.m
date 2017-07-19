@@ -7,7 +7,6 @@
 //
 
 
-#import "UIView+HHConstruct.h"
 #import "HHBarButton.h"
 #import "HHButton.h"
 #import "HHCommonInitial.h"
